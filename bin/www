@@ -1,0 +1,33 @@
+// #!/usr/bin/env node
+'use strict';
+// folktale: Custom inspection function on Objects via .inspect() is deprecated
+process.noDeprecation = true;
+
+const configureContainer = require('../config/container');
+const { createServer } = require('http');
+
+async function main() {
+  const container = await configureContainer();
+
+  // Env
+  const { env } = container.cradle;
+  const host = env.get('HTTP_HOST');
+  const port = +env.get('HTTP_PORT');
+  const mode = env.get('NODE_ENV');
+
+  // Express
+  const app = require('../config/express')(container);
+
+  // Http
+  const server = createServer(app);
+
+  server.on('close', async () => await container.dispose());
+
+  server.listen(port, host, () =>
+    console.log(`Server listening on ${host}:${port} in ${mode} mode`));
+}
+
+main().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

@@ -1,0 +1,12 @@
+{
+  "title": "Reservation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["date", "name", "email", "quantity"],
+  "properties": {
+    "date": { "type": "string" },
+    "name": { "type": "string", "minLength": 2, "maxLength": 64 },
+    "email": { "type": "string", "format": "email" },
+    "quantity": { "type": "integer", "minimum": 1 }
+  }
+}

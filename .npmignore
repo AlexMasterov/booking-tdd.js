@@ -1,0 +1,14 @@
+.git/
+.github/
+.nyc_output/
+bench/
+coverage/
+test/
+
+.eslintcache
+.gitignore
+.ignore
+.tern-project
+.tern-port
+.travis.yml
+npm-debug.log
